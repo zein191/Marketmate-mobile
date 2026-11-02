@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1118">
+<meta name="description" content="MarketMate mobile market dashboard and educational market assistant.">
+<title>MarketMate Mobile</title>
+<style>
+:root{--bg:#0b1118;--panel:#121d27;--line:#253542;--text:#edf4f7;--muted:#9aaab6;--green:#75e2b3;--blue:#91bfff;--warn:#f0c477}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#173044 0,transparent 35%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#0b1118ed;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:13px 16px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}.logo{height:36px;width:36px;border-radius:11px;background:var(--green);color:#092018;display:grid;place-items:center;font-weight:900;font-size:19px}.brand small{display:block;font-size:9px;color:var(--muted);letter-spacing:1.4px}
+.pill{font-size:10px;border:1px solid #355446;border-radius:30px;padding:6px 9px;color:var(--green)}
+main{max-width:850px;margin:auto;padding:23px 14px 50px}.intro{padding:10px 3px 20px}.eyebrow{font-size:10px;letter-spacing:1.5px;color:var(--green);font-weight:700}.intro h1{font-size:34px;line-height:1.08;letter-spacing:-1.2px;margin:9px 0}.intro h1 em{font-style:normal;color:var(--green)}.intro p{color:var(--muted);font-size:13px;line-height:1.65;margin:9px 0}
+.card{background:linear-gradient(145deg,#14212c,#101923);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:13px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;color:var(--muted);font-size:9px;letter-spacing:1.2px;font-weight:700;margin:0 0 6px}
+input,select,textarea{width:100%;background:#0b141d;color:var(--text);border:1px solid #304250;border-radius:10px;padding:12px;font-size:13px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--green)}
+button{border:0;border-radius:10px;background:var(--green);color:#092018;padding:12px 14px;font-weight:800;font-size:12px;cursor:pointer}.secondary{background:#1c2c38;border:1px solid #344958;color:#dce8ee}
+.actions{display:flex;gap:8px;margin-top:10px}.actions button{flex:1}
+.chart-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.chart-head h2,.card h2{font-size:17px;margin:5px 0}.chart-shell{height:420px;border-radius:12px;overflow:hidden;background:#0b141d}.chart-shell iframe{width:100%;height:100%;border:0}
+.note{font-size:10px;color:var(--muted);line-height:1.6;margin:10px 2px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini{padding:13px;background:#0c151e;border:1px solid #263744;border-radius:12px}.mini b{display:block;font-size:12px;margin-bottom:5px}.mini span{font-size:10px;color:var(--muted);line-height:1.5}
+.quick{font-size:12px;color:#d0dce3;line-height:1.7;margin-top:10px}
+.chat{display:flex;flex-direction:column;gap:9px;max-height:290px;overflow:auto;margin:12px 0}.bubble{max-width:92%;padding:11px 12px;border-radius:12px;font-size:12px;line-height:1.65;white-space:pre-wrap}.bot{background:#1a2b37;border:1px solid #2b404e;align-self:flex-start}.you{background:#1b3a31;color:#e8fff5;align-self:flex-end}
+.askrow{display:flex;gap:8px}.askrow input{min-width:0;flex:1}
+.examples{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.examples button{font-size:10px;padding:8px 10px}
+.warning{border:1px solid #594a2f;background:#251f14;color:#e7d3a8;padding:12px;border-radius:11px;font-size:10px;line-height:1.6;margin-top:13px}
+footer{text-align:center;color:#71818d;font-size:10px;line-height:1.7;padding:14px 5px}
+@media(max-width:420px){.intro h1{font-size:30px}.chart-shell{height:390px}.controls{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">M</div><div>MarketMate<small>MOBILE MARKET DESK</small></div></div><span class="pill">ALL MARKETS</span></header>
+<main>
+<section class="intro"><div class="eyebrow">MARKET INFORMATION, MADE CLEAR</div><h1>See the market.<br><em>Understand the move.</em></h1><p>Explore live interactive charts and ask an educational assistant about stocks, forex, gold, crypto, indices and commodities.</p></section>
+
+<section class="card">
+ <div class="eyebrow">MARKET SELECTOR</div>
+ <div class="controls" style="margin-top:12px">
+  <div class="field"><label>MARKET CATEGORY</label><select id="category">
+   <option value="stocks">Stocks</option><option value="forex" selected>Forex</option><option value="metals">Gold & metals</option><option value="crypto">Crypto</option><option value="indices">Indices</option><option value="commodities">Commodities</option>
+  </select></div>
+  <div class="field"><label>SYMBOL</label><input id="symbol" value="FX:EURUSD" autocomplete="off" autocapitalize="characters"></div>
+ </div>
+ <div class="actions"><button id="showChart">Show market chart</button><button class="secondary" id="example">Use example</button></div>
+ <p class="note">Symbols use TradingView format. Examples: NASDAQ:AAPL · FX:EURUSD · OANDA:XAUUSD · BINANCE:BTCUSDT · SP:SPX · NYMEX:CL1!</p>
+</section>
+
+<section class="card">
+ <div class="chart-head"><div><div class="eyebrow">INTERACTIVE PRICE CHART</div><h2 id="chartTitle">EUR/USD</h2></div><span class="pill">TradingView</span></div>
+ <div class="chart-shell" id="chart"></div>
+ <p class="note">The chart is provided by TradingView. Quotes and trading sessions can differ from your MT5 broker. This page does not read your MT5 account or place trades.</p>
+</section>
+
+<section class="card">
+ <div class="eyebrow">MARKET BASICS</div><h2>What should I look at?</h2>
+ <div class="grid2" style="margin-top:12px">
+  <div class="mini"><b>Trend</b><span>Is price generally making higher highs, lower lows, or moving sideways?</span></div>
+  <div class="mini"><b>Support & resistance</b><span>Areas where price has previously paused or changed direction.</span></div>
+  <div class="mini"><b>Volume</b><span>How much activity accompanies a price move, where the market provides volume.</span></div>
+  <div class="mini"><b>Timeframe</b><span>A short chart interval can look different from a daily or weekly chart.</span></div>
+ </div>
+ <div id="marketHint" class="quick">Choose a symbol and load its chart. The chart itself is interactive; zoom out to see more history.</div>
+</section>
+
+<section class="card">
+ <div class="eyebrow">MARKETMATE ASSISTANT</div><h2>Ask about any market</h2>
+ <p class="note" style="margin-left:0">This built-in helper explains market concepts and helps you frame questions. It is not connected to a live AI model, your MT5 account, or the chart's private data.</p>
+ <div class="examples">
+  <button class="secondary sample">What is RSI?</button><button class="secondary sample">Explain support and resistance</button><button class="secondary sample">What moves gold prices?</button>
+ </div>
+ <div class="chat" id="chat"><div class="bubble bot">Hi! Ask me about stocks, forex, gold, crypto, indices, commodities, chart terms or market risks. I can explain concepts, but I cannot know what price will do next.</div></div>
+ <form class="askrow" id="askForm"><input id="question" placeholder="Ask a market question…" maxlength="500"><button type="submit">Ask</button></form>
+ <div class="warning">Market prices can rise or fall. No indicator or forecast guarantees what happens next. This is educational information, not a personal investment recommendation.</div>
+</section>
+
+<section class="card">
+ <div class="eyebrow">ABOUT YOUR MT5 ACCOUNT</div><h2>How MT5 fits in</h2>
+ <p class="quick">Your MetaTrader 5 Android app account cannot be connected directly to this browser page. MT5's official Python connection requires the desktop terminal on a Windows computer. This mobile version uses TradingView charts instead. To display your broker's exact MT5 prices later, a secure bridge running on a computer/server would be needed.</p>
+</section>
+<footer>MarketMate Mobile · Educational use only · No broker login requested · No trades placed</footer>
+</main>
+<script>
+const categoryDefaults={stocks:"NASDAQ:AAPL",forex:"FX:EURUSD",metals:"OANDA:XAUUSD",crypto:"BINANCE:BTCUSDT",indices:"SP:SPX",commodities:"NYMEX:CL1!"};
+const displayNames={stocks:"Apple · NASDAQ",forex:"EUR/USD · Forex",metals:"Gold · XAU/USD",crypto:"Bitcoin · BTC/USDT",indices:"S&P 500",commodities:"WTI Crude Oil"};
+function renderChart(symbol){
+ const safe=symbol.trim().toUpperCase();
+ if(!safe){alert("Enter a symbol first.");return;}
+ document.getElementById("symbol").value=safe;
+ document.getElementById("chartTitle").textContent=safe;
+ const src="https://www.tradingview.com/widgetembed/?frameElementId=tradingview_widget&symbol="+encodeURIComponent(safe)+"&interval=60&hidesidetoolbar=0&symboledit=1&saveimage=0&toolbarbg=%230b141d&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=1&hideideas=1&studies=%5B%5D&locale=en";
+ document.getElementById("chart").innerHTML='<iframe title="TradingView market chart" loading="lazy" allowfullscreen src="'+src+'"></iframe>';
+ document.getElementById("marketHint").textContent="Chart loaded for "+safe+". Use the chart controls to change interval, zoom and inspect historical price action. A single chart view is not a reliable prediction.";
+}
+document.getElementById("showChart").addEventListener("click",()=>renderChart(document.getElementById("symbol").value));
+document.getElementById("example").addEventListener("click",()=>{const c=document.getElementById("category").value;document.getElementById("symbol").value=categoryDefaults[c];renderChart(categoryDefaults[c]);});
+document.getElementById("category").addEventListener("change",e=>{const s=categoryDefaults[e.target.value];document.getElementById("symbol").value=s;});
+renderChart("FX:EURUSD");
+function reply(q){
+ const t=q.toLowerCase();
+ if(/\brsi\b|relative strength/.test(t))return "RSI means Relative Strength Index. It is a momentum indicator, usually shown from 0 to 100. Traders often watch readings above 70 or below 30 as possible signs of strong momentum, but these levels are not automatic buy or sell signals. RSI can stay elevated or depressed during strong trends.";
+ if(/macd/.test(t))return "MACD is a trend-and-momentum indicator based on moving averages. Its MACD line, signal line and histogram can help describe momentum changes. It can lag price and produce false signals, especially in sideways markets.";
+ if(/support|resistance/.test(t))return "Support is a price area where falling prices have previously paused or bounced. Resistance is an area where rising prices have previously stalled. They are zones, not exact walls, and a break can fail.";
+ if(/gold|xau|metal/.test(t))return "Gold can be influenced by interest-rate expectations, the US dollar, inflation expectations, central-bank activity and demand for safe-haven assets. These factors can conflict, so none predicts the next move on its own.";
+ if(/bitcoin|crypto|ethereum|btc|eth/.test(t))return "Crypto prices can react to market liquidity, regulation, technology news, exchange activity and broader risk sentiment. Volatility can be high, and prices may move sharply in either direction.";
+ if(/forex|currency|eur|usd|yen|pound/.test(t))return "Forex prices are influenced by interest-rate expectations, economic data, central-bank decisions, trade and geopolitical events. A currency pair always compares one currency with another.";
+ if(/stock|share|equity|company/.test(t))return "A stock represents ownership in a company. Its price can respond to company earnings, guidance, industry conditions, interest rates and overall investor expectations. A good company is not automatically a good purchase at every price.";
+ if(/volume/.test(t))return "Volume measures activity over a period. A move accompanied by higher-than-usual volume may show stronger participation, but volume data differs across markets and providers.";
+ if(/trend|up|down|predict|future|happen|buy|sell/.test(t))return "I can't reliably predict whether a market will rise or fall. To study a move, check the timeframe, recent swing highs/lows, support and resistance, volume (if available), and relevant news. Compare more than one timeframe and consider what would invalidate each scenario. I don't provide personal buy/sell instructions.";
+ if(/spread|bid|ask/.test(t))return "The bid is the price buyers are offering; the ask is the price sellers are asking. The spread is the difference between them. It can widen during volatile or illiquid periods.";
+ return "I can explain RSI, MACD, moving averages, support/resistance, volume, spreads, forex, stocks, gold, crypto, indices and commodities. If you want help interpreting a particular chart, tell me its symbol, timeframe, current price and what you notice. I cannot see private chart data or predict prices.";
+}
+function send(q){if(!q.trim())return;const chat=document.getElementById("chat");const u=document.createElement("div");u.className="bubble you";u.textContent=q;chat.appendChild(u);const a=document.createElement("div");a.className="bubble bot";a.textContent=reply(q);chat.appendChild(a);chat.scrollTop=chat.scrollHeight;document.getElementById("question").value="";}
+document.getElementById("askForm").addEventListener("submit",e=>{e.preventDefault();send(document.getElementById("question").value);});
+document.querySelectorAll(".sample").forEach(b=>b.addEventListener("click",()=>send(b.textContent)));
+</script>
+</body></html>
